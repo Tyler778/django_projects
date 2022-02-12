@@ -39,6 +39,15 @@ class Book(models.Model):
     def get_absolute_url(self):
         """Returns the url to access a detail record for this book."""
         return reverse('book-detail', args=[str(self.id)])
+    
+
+    #Display Genre Function
+    def display_genre(self):
+        """Create a string for the Genre. This is required to display genre in Admin."""
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+        
+    display_genre.short_description = 'Genre'
+
 
 
 
@@ -94,6 +103,9 @@ class Author(models.Model):
         """String for representing the Model object."""
         return f'{self.last_name}, {self.first_name}'
 
+    class Meta:
+        ordering = ['last_name']
+
 
 
 #Language Model
@@ -105,3 +117,5 @@ class Language(models.Model):
     def __str__(self):
         """String for representing the Model object (in Admin site etc.)"""
         return self.name
+
+
