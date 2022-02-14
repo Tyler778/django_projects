@@ -31,8 +31,8 @@ class Patient(models.Model):
     fastingBS = models.IntegerField(help_text='Enter fasting blood sugar of patient')
     ecg_fields = (
         ('Normal', 'Normal'),
-        ('ST', 'having ST-T wave abnormality'),
-        ('LVH', 'showing probable or definite left ventricular hypertrophy by Estes criteria'),
+        ('ST', 'Having ST-T wave abnormality'),
+        ('LVH', 'Left Ventricular Hypertrophy'),
     )
     ecg = models.CharField(
         max_length = 8,
@@ -42,19 +42,19 @@ class Patient(models.Model):
     )
     maxHR = models.IntegerField(help_text='Enter the max heart rate of the patient')
     exerciseAngina_fields = (
-        ('Y', "yes"),
-        ('N', 'no')
+        ('Yes', "Yes"),
+        ('No', 'No')
     )
     exerciseAngina = models.CharField(
-        max_length = 1,
+        max_length = 3,
         choices = exerciseAngina_fields,
         help_text = 'Does the patient experience exercise induced angina?'
     )
     oldPeak = models.FloatField(max_length = 4, help_text = 'Enter oldpeak measured in depression')
     st_slope_fields = (
-        ('Up', 'Upwards'),
+        ('Upwards', 'Upwards'),
         ('Flat', 'Flat'),
-        ('Down', 'Downwards')
+        ('Down', 'Down')
     )
     stSlope = models.CharField(
         max_length = 10,
@@ -68,4 +68,4 @@ class Patient(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return self.name
+        return str(self.age)
