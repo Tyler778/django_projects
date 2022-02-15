@@ -17,12 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from django.views.generic import RedirectView
+from website.views import PatientCreate
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('website/', include('website.urls')),
     path('', RedirectView.as_view(url='website/', permanent=True)),
-    path('website/', include('website.urls')),
+    path('patient/create/', PatientCreate.as_view(), name='patient-create')
 ]
 
 
