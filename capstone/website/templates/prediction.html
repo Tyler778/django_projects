@@ -3,7 +3,7 @@
 {% block content %}
 <div class="">
     <div class="text-primary">
-        <h1>Patient Heart Failure Screening</h1>
+        <h1>Welcome to the prediction center</h1>
         <p>This portal serves as a way to assist medical practitioners, with the help of machine learning, in screening their patients for possible <b>Heart Failure</b>!</p>
     </div>
       <br>
@@ -17,8 +17,7 @@
       <p>As of now, <b>{{ num_patients }}</b> individuals have been screened for heart failure using our software!</p>
       <br>
       <br>
-      <a href="{% url 'patient-create' %}" role="button" class="btn btn-primary">Add Patient Information</a>
-      <a href="{% url 'patients' %}" role="button" class="btn btn-primary">List Patients</a>
+      <a href="{% url 'patient-create' %}"><button type="button" class="btn-lg btn-outline-primary">Predict Heart Disease</button></a>
 </div>
 
 {% endblock %}

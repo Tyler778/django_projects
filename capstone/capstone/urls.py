@@ -17,13 +17,16 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from django.views.generic import RedirectView
-from website.views import PatientCreate
+from website.views import PatientCreate, PatientListView, PatientDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('website/', include('website.urls')),
     path('', RedirectView.as_view(url='website/', permanent=True)),
-    path('patient/create/', PatientCreate.as_view(), name='patient-create')
+    path('patient/create/', PatientCreate.as_view(), name='patient-create'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('patients/', PatientListView.as_view(), name='patients'),
+    path('patient/<int:pk>', PatientDetailView.as_view(), name='patient-detail')
 ]
 
 

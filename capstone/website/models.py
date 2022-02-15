@@ -1,11 +1,13 @@
 from django.db import models
+from django.urls import reverse
 import pandas as pd
 from sklearn import linear_model
 linReg = linear_model.LinearRegression()
-
+import uuid
 # Create your models here.
 class Patient(models.Model):
     """Model Representing the Patient."""
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular patient')
     age = models.IntegerField(help_text='Enter age of patient')
     sex_fields = (
         ('M', 'Male'),
@@ -65,25 +67,21 @@ class Patient(models.Model):
         help_text = 'Enter the slope of the peak exercise ST segment direction for the patient',
     )
 
-
-
-
-
     def __str__(self):
         """String for representing the Model object."""
         return str(self.age)
 
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this patient."""
+        return reverse('patient-detail', args=[str(self.id)])
 
 
+    def perform_prediction(self):
+        main_df = pd.read_csv('static/data/cleanHeart.csv')
+        regu = linReg.fit(main_df[['Age','Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope']],main_df['HeartDisease'])
+        tester = regu.predict([[65,0,3,140,306,1,0,87,1,1.5,0]])
+        return tester
 
-import uuid
-class PatientPrediction(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular prediction')
-    #main_df = pd.read_csv('cleanHeart.csv')
-    #regu = linReg.fit(main_df[['Age','Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope']],main_df['HeartDisease'])
+    #def clean_attributes(self):
 
-    #tester = regu.predict([[65,0,3,140,306,1,0,87,1,1.5,0]])
-    
-    def predict(self, Patient):
-        prediction_score = self.regu.predict([[Patient.age, Patient.sex, Patient, ]])
-        return prediction_score
+

@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Age: {{ patient.age }}</h2> 
+  <h2>Sex: {{ patient.sex }}</h2>
+  <h2>ChestPainType: {{ patient.chest }}</h2>
+  <h2>Resting BP: {{ patient.restingBP }}</h2>
+  <h2>Cholesterol: {{ patient.cholesterol }}</h2>
+  <h2>Fasting Blood Sugar: {{ patient.fastingBS }}</h2>
+  <h2>Resting ECG: {{ patient.ecg }}</h2>
+  <h2>Max Heart Rate: {{ patient.maxHR }}</h2>
+  <h2>Exercise Angina: {{ patient.exerciseAngina }}</h2>
+  <h2>OldPeak Depression: {{ patient.oldPeak }}</h2>
+  <h2>ST Slope: {{ patient.stSlope }}</h2>
+
+
+
+
+<br>
+<a href="{% url 'patients' %}" class="btn btn-primary" role="button">Return to List</a>
+<button type="submit" class="btn btn-primary">Print Predict</button>
+<h3>Prediction Value: {{ patient.perform_prediction }}</h3>
+  
+{% endblock %}

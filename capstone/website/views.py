@@ -3,7 +3,9 @@ from urllib import request
 from django.shortcuts import render
 from .models import Patient
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
 # Create your views here.
 
 
@@ -21,9 +23,18 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
-class PatientCreate(CreateView):
+class PatientCreate(LoginRequiredMixin, CreateView):
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     model = Patient
-    fields = '__all__'
+    fields = ('age', 'sex', 'chest', 'restingBP', 'cholesterol', 'fastingBS', 'ecg', 'maxHR', 'exerciseAngina', 'oldPeak', 'stSlope')
 
     def get_success_url(self):
-        return reverse('index')
+        return reverse('patients')
+
+class PatientListView(LoginRequiredMixin, generic.ListView):
+    model = Patient
+
+class PatientDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Patient
+
