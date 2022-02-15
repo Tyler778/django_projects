@@ -69,7 +69,7 @@ def cleanData(v):
 
     return v
 
-main_df = pd.read_csv('data/cleanHeart.csv')
+main_df = pd.read_csv('static/data/cleanHeart.csv')
 
 
 regu = linReg.fit(main_df[['Age','Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope']],main_df['HeartDisease'])

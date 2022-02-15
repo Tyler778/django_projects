@@ -2,8 +2,10 @@ from django.db import models
 from django.urls import reverse
 import pandas as pd
 from sklearn import linear_model
+from django.contrib.staticfiles import *
+import csv
 linReg = linear_model.LinearRegression()
-import uuid
+
 # Create your models here.
 class Patient(models.Model):
     """Model Representing the Patient."""
@@ -75,13 +77,58 @@ class Patient(models.Model):
         """Returns the url to access a detail record for this patient."""
         return reverse('patient-detail', args=[str(self.id)])
 
+    def ping_me(self):
+        return 'ping!'
 
     def perform_prediction(self):
-        main_df = pd.read_csv('static/data/cleanHeart.csv')
-        regu = linReg.fit(main_df[['Age','Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope']],main_df['HeartDisease'])
-        tester = regu.predict([[65,0,3,140,306,1,0,87,1,1.5,0]])
+        main = pd.read_csv('https://bscs-capstone-tyler.s3.us-east-2.amazonaws.com/cleanHeart.csv')
+        regu = linReg.fit(main[['Age','Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope']],main['HeartDisease'])
+        tester = regu.predict([self.clean_attributes()])
         return tester
 
-    #def clean_attributes(self):
+    def clean_attributes(self):
+        binAge = int(self.age)
 
+        if self.sex == 'M':
+            binSex = 0
+        elif self.sex == 'F':
+            binSex = 1
+        
+        if self.chest == 'TA':
+            binChest = 0
+        elif self.chest == 'ATA':
+            binChest = 1
+        elif self.chest == 'NAP':
+            binChest = 2
+        elif self.chest == 'ASY':
+            binChest = 3
 
+        binRestingBP = int(self.restingBP)
+        binCholesterol = int(self.cholesterol)
+        binFastingBS = int(self.fastingBS)
+
+        if self.ecg == 'Normal':
+            binECG = 0
+        elif self.ecg == 'ST':
+            binECG = 1
+        elif self.ecg == 'LVH':
+            binECG = 2
+        if self.exerciseAngina == 'Yes':
+            binExerciseAngina = 1
+        elif self.exerciseAngina == 'No':
+            binExerciseAngina = 0
+        
+        binMaxHR = int(self.maxHR)
+        binOldPeak = float(self.oldPeak)
+
+        if self.stSlope == 'Flat':
+            binSTSlope = 0
+        elif self.stSlope == 'Down':
+            binSTSlope = -1
+        elif self.stSlope == 'Upwards':
+            binSTSlope = 1
+        patientInfo = [binAge, binSex, binChest, binRestingBP, binCholesterol, binFastingBS, binECG, binMaxHR, binExerciseAngina, binOldPeak, binSTSlope]
+        print(patientInfo)
+        return patientInfo
+
+[65,0,3,140,306,1,0,87,1,1.5,0]
