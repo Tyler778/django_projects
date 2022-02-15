@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Delete Patient Information</h1>
+
+<p>Are you sure you want to delete the patient: {{ patient.age }}, {{ patient.sex }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <Button type="submit" class="btn btn-danger" action="" >Delete</Button>
+</form>
+
+{% endblock %}

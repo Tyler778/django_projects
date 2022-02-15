@@ -3,11 +3,14 @@
 {% block content %}
   <h1>Patient List</h1>
   {% if patient_list %}
+  <a href="{% url 'patient-create' %}" role="button" class="btn btn-primary">Add Patient Information</a>
+  <br>
     {% for patient in patient_list %}
     <br>
     <div>
         <a class="btn btn-primary" role="button" href="{{ patient.get_absolute_url }}">Prediction</a>
-        {{ patient.age }}, {{patient.sex}}, {{ patient.chest }}, {{ patient.restingBP }}, {{ patient.cholesterol }}, {{ patient.fastingBS }}, {{ patient.ecg }}, {{ patient.maxHR }}, {{ patient.exerciseAngina }}, {{ patient.oldPeak }}, {{ patient.stSlope }}
+        <a class="btn btn-danger" role="button" href="{{ patient.get_absolute_url_delete }}">Delete Patient</a>
+        This patient is {{ patient.age }} years old and {{patient.sex}}
     </div>
     {% endfor %}
   {% else %}

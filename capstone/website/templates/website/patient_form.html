@@ -1,11 +1,15 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <form action="" method="post">
+<br>
+<div style="background-color:rgb(175, 218, 255); border-radius:20px;padding:10px;max-width: 670px;">
+  <form class="form-group" action="" method="post">
     {% csrf_token %}
     <table>
     {{ form.as_table }}
     </table>
-    <button type="button submit" class="btn-lg btn-outline-primary">Predict Heart Disease</button>
+    <button type="button submit" class="btn btn-lg btn-primary">Predict Heart Disease</button>
   </form>
+</div>
+  
 {% endblock %}

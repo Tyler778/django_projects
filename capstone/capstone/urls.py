@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from django.views.generic import RedirectView
-from website.views import PatientCreate, PatientListView, PatientDetailView
+from website.views import PatientCreate, PatientListView, PatientDetailView, PatientDelete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +26,8 @@ urlpatterns = [
     path('patient/create/', PatientCreate.as_view(), name='patient-create'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('patients/', PatientListView.as_view(), name='patients'),
-    path('patient/<int:pk>', PatientDetailView.as_view(), name='patient-detail')
+    path('patient/<int:pk>', PatientDetailView.as_view(), name='patient-detail'),
+    path('patient/<int:pk>/delete/', PatientDelete.as_view(), name='patient-delete'),
 ]
 
 

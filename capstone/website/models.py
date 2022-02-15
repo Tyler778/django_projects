@@ -77,6 +77,10 @@ class Patient(models.Model):
         """Returns the url to access a detail record for this patient."""
         return reverse('patient-detail', args=[str(self.id)])
 
+    def get_absolute_url_delete(self):
+        """Returns the url to access a detail record for this patient."""
+        return reverse('patient-delete', args=[str(self.id)])
+
     def ping_me(self):
         return 'ping!'
 
@@ -84,7 +88,7 @@ class Patient(models.Model):
         main = pd.read_csv('https://bscs-capstone-tyler.s3.us-east-2.amazonaws.com/cleanHeart.csv')
         regu = linReg.fit(main[['Age','Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope']],main['HeartDisease'])
         tester = regu.predict([self.clean_attributes()])
-        return tester
+        return tester[0]
 
     def clean_attributes(self):
         binAge = int(self.age)
@@ -128,7 +132,4 @@ class Patient(models.Model):
         elif self.stSlope == 'Upwards':
             binSTSlope = 1
         patientInfo = [binAge, binSex, binChest, binRestingBP, binCholesterol, binFastingBS, binECG, binMaxHR, binExerciseAngina, binOldPeak, binSTSlope]
-        print(patientInfo)
         return patientInfo
-
-[65,0,3,140,306,1,0,87,1,1.5,0]

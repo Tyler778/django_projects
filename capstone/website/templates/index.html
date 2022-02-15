@@ -1,24 +1,46 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<div class="">
-    <div class="text-primary">
-        <h1>Patient Heart Failure Screening</h1>
-        <p>This portal serves as a way to assist medical practitioners, with the help of machine learning, in screening their patients for possible <b>Heart Failure</b>!</p>
+<div class="d-flex flex-row">
+  <div class="p-2" style="padding:20px;">
+
+
+
+<div style="background-color:rgb(177, 95, 95); max-width: 500px; padding: 10px;border-radius: 20px;text-align: center;">
+  <h2>Patient Heart Failure Screening</h2>
+  </div>
+
+<div class="d-flex flex-row" style="background-color: rgba(179, 172, 172, 0.726);max-width: 500px;border-radius: 20px;padding: 20px;margin-top: 10px;">
+    <div class="p-2 text" style="max-width: 240px;">
+      <p>This portal serves as a way to assist medical practitioners, with the help of machine learning, in screening their patients for possible <b>Heart Failure</b>!</p>
     </div>
-      <br>
-      <div class="d-flex justify-content-center">
-        {% load static %}
-        <img src="{% static 'images/heart.jpg' %}" alt="Heart Photo" style="width:250px;height:250px;">
-      </div>
-    
-      <br>
-      <h2>Patient Content</h2>
-      <p>As of now, <b>{{ num_patients }}</b> individuals have been screened for heart failure using our software!</p>
-      <br>
-      <br>
-      <a href="{% url 'patient-create' %}" role="button" class="btn btn-primary">Add Patient Information</a>
-      <a href="{% url 'patients' %}" role="button" class="btn btn-primary">List Patients</a>
+    <div class="p-2">
+      {% load static %}
+      <img src="{% static 'images/heart.jpg' %}" alt="Heart Photo" style="width:250px;height:250px;border-radius: 20px;">
+    </div>
 </div>
+
+      <div style="background-color:rgb(187, 200, 228);max-width: 500px;border-radius:20px;margin-top:10px; padding:20px;">
+        <h2>Patient Content</h2>
+        <p>As of now, <b>{{ num_patients }}</b> individuals have been screened for heart failure using our software!</p>
+        <br>
+        <a href="{% url 'patient-create' %}" role="button" class="btn btn-primary">Add Patient Information</a>
+        <a href="{% url 'patients' %}" role="button" class="btn btn-primary">List Patients</a>
+      </div>
+      
+</div>
+<div class="p-2 d-flex flex-column" style="background-color:burlywood; border-radius:20px; padding:20px; margin-top: 10px; margin-left:2px;width: 500px; align-items: center;">
+  <div style="background-color:aliceblue; padding:10px;border-radius:10px;width: 400px; text-align: center; margin:10px">
+    <h2>Data Visualization</h2>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto quas explicabo sit consequatur quia? Magni, quibusdam, architecto autem voluptatem omnis cupiditate quidem sit harum nostrum expedita perspiciatis. Rem, cum deserunt.</p>
+  </div>
+  <div style="background-color:aliceblue; padding:10px;border-radius:10px;width: 400px; text-align: center; margin:10px">
+    <h2>Data Visualization</h2>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto quas explicabo sit consequatur quia? Magni, quibusdam, architecto autem voluptatem omnis cupiditate quidem sit harum nostrum expedita perspiciatis. Rem, cum deserunt.</p>
+  </div>
+</div>
+
+</div>
+
 
 {% endblock %}

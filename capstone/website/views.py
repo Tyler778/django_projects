@@ -1,4 +1,4 @@
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from urllib import request
 from django.shortcuts import render
 from .models import Patient
@@ -37,4 +37,8 @@ class PatientListView(LoginRequiredMixin, generic.ListView):
 
 class PatientDetailView(LoginRequiredMixin, generic.DetailView):
     model = Patient
+
+class PatientDelete(LoginRequiredMixin, generic.DeleteView):
+    model = Patient
+    success_url = reverse_lazy('patients')
 
