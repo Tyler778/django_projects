@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from django.views.generic import RedirectView
-from website.views import PatientCreate, PatientListView, PatientDetailView, PatientDelete
+from website.views import PatientCreate, PatientListView, PatientDetailView, PatientDelete, DataViewOne, AccuracyTestView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,8 @@ urlpatterns = [
     path('patients/', PatientListView.as_view(), name='patients'),
     path('patient/<int:pk>', PatientDetailView.as_view(), name='patient-detail'),
     path('patient/<int:pk>/delete/', PatientDelete.as_view(), name='patient-delete'),
+    path('visualization', DataViewOne.as_view(), name='visual'),
+    path('accuracy', AccuracyTestView.as_view(), name='accuracy'),
 ]
 
 

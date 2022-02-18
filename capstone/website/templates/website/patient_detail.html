@@ -18,7 +18,21 @@
 
 <br>
 <a href="{% url 'patients' %}" class="btn btn-primary" role="button">Return to List</a>
-<button type="submit" class="btn btn-primary">Print Predict</button>
-<h3>Prediction Value: {{ patient.perform_prediction }}</h3>
+{% if patient.perform_prediction == 'blue' %}
+<h3 style="background-color:rgb(80, 191, 255);max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: BLUE</h3>
+<p>Measuring these vitals against our dataset, we determined that you're very unlikely to currently be at risk for heart failure.</p>
+{% elif patient.perform_prediction == 'yellow' %}
+<h3 style="background-color:yellow;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;text-align:center;">Prediction Value: YELLOW</h3>
+<p>Measuring these vitals against our dataset, we determined that you have are at low risk of having heart failure.</p>
+{% elif patient.perform_prediction == 'orange' %}
+<h3 style="background-color:orange;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;text-align:center;">Prediction Value: ORANGE</h3>
+<p>Measuring these vitals against our dataset, we determined this patient has a medium amount of risk to have heart failure.</p>
+{% elif patient.perform_prediction == 'red' %}
+<h3 style="background-color:red;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;text-align:center;">Prediction Value: RED</h3>
+<p>Measuring these vitals against our dataset, we determined this patient has high chance to have heart failure!</p>
+{% elif patient.perform_prediction == 'Absolute' %}
+<h3 style="background-color:black;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid white;text-align:center;">Prediction Value: BLACK</h3>
+<p>Measuring these vitals against our dataset, we determined this patient has an extremely high likelihood of having heart failure!</p>
+{% endif %}
   
 {% endblock %}
