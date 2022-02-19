@@ -1,68 +1,90 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<div>
-    <div style="background-color:lightpink;border-radius:20px; padding:10px; margin-top:10px; width:430px;text-align: center;align-content: center;align-items: center;">
-        {% for key, value in heartdict.items %}
-        <h2>Patient: {{ key }}</h2>
-        {% if value == 'blue' %}
-        <h3 style="background-color:rgb(80, 191, 255);max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: BLUE</h3>
-        <p>Measuring these vitals against our dataset, we determined that you're very unlikely to currently be at risk for heart failure.</p>
-        {% elif value == 'yellow' %}
-        <h3 style="background-color:yellow;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: YELLOW</h3>
-        <p>Measuring these vitals against our dataset, we determined that you have are at low risk of having heart failure.</p>
-        {% elif value == 'orange' %}
-        <h3 style="background-color:orange;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: ORANGE</h3>
-        <p>Measuring these vitals against our dataset, we determined this patient has a medium amount of risk to have heart failure.</p>
-        {% elif value == 'red' %}
-        <h3 style="background-color:red;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: RED</h3>
-        <p>Measuring these vitals against our dataset, we determined this patient has high chance to have heart failure!</p>
-        {% elif value == 'Absolute' %}
-        <h3 style="background-color:black;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid white;color:white;">Prediction Value: BLACK</h3>
-        <p>Measuring these vitals against our dataset, we determined this patient has an extremely high likelihood of having heart failure!</p>
-        {% endif %}
-        {% endfor %}
-    </div>
-    <br>
-    <div style="background-color:lightgrey;border-radius:20px;text-align:center;max-width: 430px;padding:10px">
-        <h2>Report</h2>
-        <p>Of our test set representing 10 patients who have heart disease, our model accurately predicted that 10 of 10 were risk level 3 or above.</p>
-        <b>PASS</b> 
-    </div>
-</div>
-
-
-
-    
-
-    <div style="background-color:lightpink;border-radius:20px; padding:10px; margin-top:10px; width:430px;text-align: center;align-content: center;align-items: center;">
-        {% for key, value in nonheartdict.items %}
-        <h2>Patient: {{ key }}</h2>
-        {% if value == 'blue' %}
-        <h3 style="background-color:rgb(80, 191, 255);max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: BLUE</h3>
-        <p>Measuring these vitals against our dataset, we determined that you're very unlikely to currently be at risk for heart failure.</p>
-        {% elif value == 'yellow' %}
-        <h3 style="background-color:yellow;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: YELLOW</h3>
-        <p>Measuring these vitals against our dataset, we determined that you have are at low risk of having heart failure.</p>
-        {% elif value == 'orange' %}
-        <h3 style="background-color:orange;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: ORANGE</h3>
-        <p>Measuring these vitals against our dataset, we determined this patient has a medium amount of risk to have heart failure.</p>
-        {% elif value == 'red' %}
-        <h3 style="background-color:red;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: RED</h3>
-        <p>Measuring these vitals against our dataset, we determined this patient has high chance to have heart failure!</p>
-        {% elif value == 'Absolute' %}
-        <h3 style="background-color:black;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid white;color:white;">Prediction Value: BLACK</h3>
-        <p>Measuring these vitals against our dataset, we determined this patient has an extremely high likelihood of having heart failure!</p>
-        {% endif %}
-        {% endfor %}
-    </div>
-    
-    
+<div class="row"style="padding:10px">
+    <div>
+        <div style="background-color:lightpink;border-radius:20px; padding:20px;width:430px;text-align: center;align-content: center;align-items: center;margin-right:10px;">
+            <h1>Patients with Heart Disease</h1>
+            {% for key, value in heartdict.items %}
+            <div style="background-color:aliceblue;margin-top:20px;padding:10px;border-radius: 10px;">
+                <h3>Patient: {{ key }}</h3>
+                {% if value == 'blue' %}
+                <h4 style="background-color:rgb(80, 191, 255);max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: BLUE</h4>
+                <p>Measuring these vitals against our dataset, we determined that you're very unlikely to currently be at risk for heart failure.</p>
+                {% elif value == 'yellow' %}
+                <h4 style="background-color:yellow;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: YELLOW</h4>
+                <p>Measuring these vitals against our dataset, we determined that you have are at low risk of having heart failure.</p>
+                {% elif value == 'orange' %}
+                <h4 style="background-color:orange;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: ORANGE</h4>
+                <p>Measuring these vitals against our dataset, we determined this patient has a medium amount of risk to have heart failure.</p>
+                {% elif value == 'red' %}
+                <h4 style="background-color:red;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;color:white;">Prediction Value: RED</h4>
+                <p>Measuring these vitals against our dataset, we determined this patient has high chance to have heart failure!</p>
+                {% elif value == 'Absolute' %}
+                <h4 style="background-color:black;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid white;color:white;">Prediction Value: BLACK</h4>
+                <p>Measuring these vitals against our dataset, we determined this patient has an extremely high likelihood of having heart failure!</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
         <br>
-        <div style="background-color:lightgrey;border-radius:20px;text-align:center;max-width: 430px;">
+        <div style="background-color:lightgrey;border-radius:20px;text-align:center;max-width: 430px;padding:10px">
             <h2>Report</h2>
             <p>Of our test set representing 10 patients who have heart disease, our model accurately predicted that 10 of 10 were risk level 3 or above.</p>
-            <b>PASS</b> 
+            <b style="background-color:green; padding:5px;border-radius:5px;">PASS</b> 
         </div>
+    </div>
+    
+    <div>
+        <div style="background-color:lightpink;border-radius:20px; padding:20px;width:430px;text-align: center;align-content: center;align-items: center;margin-right:10px;">
+            <h1>Patients without Heart Disease</h1>
+            {% for key, value in nonheartdict.items %}
+            <div style="background-color:aliceblue;margin-top:20px;padding:10px;border-radius: 10px;">
+                <h3>Patient: {{ key }}</h3>
+                {% if value == 'blue' %}
+                <h4 style="background-color:rgb(80, 191, 255);max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: BLUE</h4>
+                <p>Measuring these vitals against our dataset, we determined that you're very unlikely to currently be at risk for heart failure.</p>
+                {% elif value == 'yellow' %}
+                <h4 style="background-color:yellow;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: YELLOW</h4>
+                <p>Measuring these vitals against our dataset, we determined that you have are at low risk of having heart failure.</p>
+                {% elif value == 'orange' %}
+                <h4 style="background-color:orange;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: ORANGE</h4>
+                <p>Measuring these vitals against our dataset, we determined this patient has a medium amount of risk to have heart failure.</p>
+                {% elif value == 'red' %}
+                <h4 style="background-color:red;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;color:white;">Prediction Value: RED</h4>
+                <p>Measuring these vitals against our dataset, we determined this patient has high chance to have heart failure!</p>
+                {% elif value == 'Absolute' %}
+                <h4 style="background-color:black;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid white;color:white;">Prediction Value: BLACK</h4>
+                <p>Measuring these vitals against our dataset, we determined this patient has an extremely high likelihood of having heart failure!</p>
+                {% endif %}
+            </div>
+                {% endfor %}
+            
+            
+        </div>
+        
+        
+            <br>
+            <div style="background-color:lightgrey;border-radius:20px;text-align:center;max-width: 430px;padding:10px">
+                <h2>Report</h2>
+                <p>Of our test set representing 10 patients who do not have heart disease, all of them were assessed at lower than risk level 3, meeting the expectations set.</p>
+                <b style="background-color:green; padding:5px;border-radius:5px;">PASS</b>  
+            </div>
+    </div>
+    <div style="text-align:center;">
+        <h4 style="background-color:rgb(80, 191, 255);max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: BLUE</h4>
+        <p>Extremely Low Risk</p>
+        <h4 style="background-color:yellow;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: YELLOW</h4>
+        <p>Low Risk</p>
+        <h4 style="background-color:orange;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;">Prediction Value: ORANGE</h4>
+        <p>Moderate Risk</p>
+        <h4 style="background-color:red;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid black;color:white;">Prediction Value: RED</h4>
+        <p>Extremely High Risk</p>
+        <h4 style="background-color:black;max-width: 400px;margin:10px;padding:10px;border-radius:10px;border:1px solid white;color:white;">Prediction Value: BLACK</h4>
+        <p>Certain Heart Disease</p>
+    </div>
+        
+</div>
+
     
 {% endblock %}
