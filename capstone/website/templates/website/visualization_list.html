@@ -1,8 +1,28 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <img src='data:image/png;base64,{{ chart1 }}'>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut veniam numquam eius illo incidunt nemo. Exercitationem architecto labore, molestias voluptatibus veritatis quia vel dolore fugit fuga facilis voluptate rem consectetur?</p>
-    <img src='data:image/png;base64,{{ chart2 }}'>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut veniam numquam eius illo incidunt nemo. Exercitationem architecto labore, molestias voluptatibus veritatis quia vel dolore fugit fuga facilis voluptate rem consectetur?</p>
+<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;">
+    <img src='data:image/png;base64,{{ chart1 }}' style="border-radius:20px">
+    <p style="margin-top:10px;font-weight:bold;">This graph explains the differences between heart rate maxes in patients who do and don't have heart disease.  You can see a higher contentration of those with heart disease having a lower max heart rate.</p>
+</div>
+<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
+    <img src='data:image/png;base64,{{ chart2 }}' style="border-radius:20px">
+    <p style="margin-top:10px;font-weight:bold;">This graph shows the differences in cholesterol levels in those of different ages with or without heart disease.  You can see a fairly normal distribution of cholesterol levels in those with and without heart disease, but you can start to see more heart disease patients as the age increases.</p>
+</div>
+<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
+    <img src='data:image/png;base64,{{ chart3 }}' style="border-radius:20px">
+    <p style="margin-top:10px;font-weight:bold;">As blood pressure can be linked directly to the heart's successful functioning, this distribution does not show anything remarkable in regards to higher blood pressure correlation with heart disease or vice versa.  Overall, the data simply shows a higher concentration of those with heart disease among the elderly.</p>
+</div>
+<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
+    <img src='data:image/png;base64,{{ chart4 }}' style="border-radius:20px">
+    <p style="margin-top:10px;font-weight:bold;">This graph explains the differences between heart rate maxes in patients who do and don't have heart disease.  You can see a higher contentration of those with heart disease having a lower max heart rate.</p>
+</div>
+<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
+    <img src='data:image/png;base64,{{ chart5 }}' style="border-radius:20px">
+    <p style="margin-top:10px;font-weight:bold;">This graph explains the differences between heart rate maxes in patients who do and don't have heart disease.  You can see a higher contentration of those with heart disease having a lower max heart rate.</p>
+</div>
+<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
+    <img src='data:image/png;base64,{{ chart1 }}' style="border-radius:20px">
+    <p style="margin-top:10px;font-weight:bold;">This graph explains the differences between heart rate maxes in patients who do and don't have heart disease.  You can see a higher contentration of those with heart disease having a lower max heart rate.</p>
+</div>
 {% endblock %}

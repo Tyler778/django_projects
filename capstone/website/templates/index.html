@@ -15,8 +15,7 @@
       <p>This portal serves as a way to assist medical practitioners, with the help of machine learning, in screening their patients for possible <b>Heart Failure</b>!</p>
     </div>
     <div class="p-2">
-      {% load static %}
-      <img src="{% static 'images/heart.jpg' %}" alt="Heart Photo" style="width:250px;height:250px;border-radius: 20px;">
+      <img src="https://bscs-capstone-tyler.s3.us-east-2.amazonaws.com/heart.jpg" alt="Heart Photo" style="width:250px;height:250px;border-radius: 20px;">
     </div>
 </div>
 
@@ -32,7 +31,7 @@
 <div class="p-2 d-flex flex-column" style="background-color:burlywood; border-radius:20px; padding:20px; margin-top: 10px; margin-left:2px;width: 500px; align-items: center;">
   <div style="background-color:aliceblue; padding:10px;border-radius:10px;width: 400px; text-align: center; margin:10px">
     <h2>Data Visualization</h2>
-    <p>View visuals with explanations and information about each</p>
+    <p>Views graphs and explanations</p>
     <a href="{% url 'visual' %}" role="button" class="btn btn-primary btn-lg">Visuals</a>
   </div>
   <div style="background-color:aliceblue; padding:10px;border-radius:10px;width: 400px; text-align: center; margin:10px">

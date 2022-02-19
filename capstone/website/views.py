@@ -2,6 +2,9 @@ from django.urls import reverse, reverse_lazy
 from urllib import request
 from django.shortcuts import render
 from sklearn import linear_model
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+
 from .models import AccuracyModel, Patient, Visualization
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
@@ -20,6 +23,7 @@ import matplotlib.dates as mdates
 import io, base64
 from django.db.models.functions import TruncDay
 from matplotlib.ticker import LinearLocator
+from sklearn.preprocessing import StandardScaler
 # Create your views here.
 
 
@@ -75,6 +79,24 @@ class DataViewOne(LoginRequiredMixin, generic.ListView):
         plt.savefig(flike)
         b64 = base64.b64encode(flike.getvalue()).decode
         return b64
+
+    def pca_f(self, df):
+        df_heart_disease = df[df['HeartDisease'] == 1]
+        #df_heart_disease = df_heart_disease.drop(columns=['HeartDisease'])
+        #df_no_heart_disease = df[df['HeartDisease'] == 0]
+        features = ['Age', 'Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope']
+        x = df_heart_disease.loc[:, features].values
+        y = df_heart_disease.loc[:,['HeartDisease']].values
+        x = StandardScaler().fit_transform(x)
+
+        pca = PCA(n_components=2)
+        principalComponents = pca.fit_transform(x)
+        principalDf = pd.DataFrame(data = principalComponents, columns = ['principal component 1', 'principal component 2'])  
+        finalDf = pd.concat([principalDf, df[['target']]], axis = 1)   
+        flike = io.BytesIO()
+        plt.savefig(flike)
+        b64 = base64.b64encode(flike.getvalue()).decode
+        return b64
     
     def age_heartdisease_chol(self, df):
         df_heart_disease = df[df['HeartDisease'] > 0]
@@ -90,8 +112,54 @@ class DataViewOne(LoginRequiredMixin, generic.ListView):
         plt.savefig(flike)
         b64 = base64.b64encode(flike.getvalue()).decode
         return b64
-    
 
+    def chest_age_heart(self, df):
+        df_heart_disease = df[df['HeartDisease'] > 0]
+        df_heart_disease = df_heart_disease[df_heart_disease['Cholesterol'] > 0]
+        df_no_heart_disease = df[df['HeartDisease'] < 1]
+        df_no_heart_disease = df_no_heart_disease[df_no_heart_disease['Cholesterol'] > 0]
+
+
+        ax = df_heart_disease.plot(kind='scatter', x='Age', y='Cholesterol',color='red',label='Heart Disease')
+        df_no_heart_disease.plot(kind='scatter', x='Age', y='Cholesterol',color='blue', ax=ax, label='No Heart Disease')
+        plt.title('Cholesterol in Different Ages')
+        flike = io.BytesIO()
+        plt.savefig(flike)
+        b64 = base64.b64encode(flike.getvalue()).decode
+        return b64
+
+    def BP_heart(self, df):
+        df_heart_disease = df[df['HeartDisease'] > 0]
+        df_no_heart_disease = df[df['HeartDisease'] < 1]
+
+        ax = df_heart_disease.plot(kind='scatter', x='Age', y='RestingBP',color='red',label='Heart Disease')
+        df_no_heart_disease.plot(kind='scatter', x='Age', y='RestingBP',color='blue', ax=ax, label='No Heart Disease')
+        plt.title('Blood Pressure By Age')
+        flike = io.BytesIO()
+        plt.savefig(flike)
+        b64 = base64.b64encode(flike.getvalue()).decode
+        return b64
+    
+    def pie_chest_heart(self, df):
+        df_heart_disease = df[df['HeartDisease'] > 0]
+
+        plt.figure()
+        df.groupby(['ChestPainType']).sum().plot(kind='pie', y='HeartDisease', autopct='%1.0f%%')
+
+        
+        flike = io.BytesIO()
+        plt.savefig(flike)
+        b64 = base64.b64encode(flike.getvalue()).decode
+        return b64
+
+    def pie_chest_noheart(self, df):
+        plt.figure()
+        df.groupby(['ChestPainType']).sum().plot(kind='pie', y='HeartDisease', autopct='%1.0f%%')
+        
+        flike = io.BytesIO()
+        plt.savefig(flike)
+        b64 = base64.b64encode(flike.getvalue()).decode
+        return b64
 
 
     def get_context_data(self, **kwargs):
@@ -104,6 +172,12 @@ class DataViewOne(LoginRequiredMixin, generic.ListView):
         context['chart1'] = self.chol_heart(df)
 
         context['chart2'] = self.age_heartdisease_chol(df)
+        context['chart3'] = self.BP_heart(df)
+        context['chart4'] = self.pie_chest_heart(df)
+        context['chart5'] = self.pie_chest_noheart(df)
+        context['chart6'] = self.pca(df)
+        #df_heart_disease = df[df['HeartDisease'] == 0]
+        #print(df_heart_disease.isnull().sum().sum())
         return context
 
 linReg = linear_model.LinearRegression()
