@@ -81,10 +81,19 @@ class DataViewOne(LoginRequiredMixin, generic.ListView):
         return b64
 
     def pca_f(self, df):
-        df_heart_disease = df[df['HeartDisease'] == 1]
-        #df_heart_disease = df_heart_disease.drop(columns=['HeartDisease'])
-        #df_no_heart_disease = df[df['HeartDisease'] == 0]
-        features = ['Age', 'Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope']
+        df_heart_disease = df
+        #print(df_heart_disease)
+        features = ['Age',
+                    #'Sex',
+                    'ChestPainType',
+                    #'RestingBP',
+                    'Cholesterol',
+                    'FastingBS',
+                    'RestingECG',
+                    'MaxHR',
+                    'ExerciseAngina',
+                    'Oldpeak',
+                    'ST_Slope']
         x = df_heart_disease.loc[:, features].values
         y = df_heart_disease.loc[:,['HeartDisease']].values
         x = StandardScaler().fit_transform(x)
@@ -92,11 +101,28 @@ class DataViewOne(LoginRequiredMixin, generic.ListView):
         pca = PCA(n_components=2)
         principalComponents = pca.fit_transform(x)
         principalDf = pd.DataFrame(data = principalComponents, columns = ['principal component 1', 'principal component 2'])  
-        finalDf = pd.concat([principalDf, df[['target']]], axis = 1)   
+        finalDf = pd.concat([principalDf, df[['HeartDisease']]], axis = 1)   
+        fig = plt.figure()
+        ax = fig.add_subplot(1,1,1)
+        ax.set_xlabel('Principal Component 1')
+        ax.set_ylabel('Principal Component 2')
+        ax.set_title('2 Component PCA')
+        targets = [0, 1]
+        colors = ['b', 'r']
+        for target, color in zip(targets,colors):
+            indiciesToKeep = finalDf['HeartDisease'] == target
+            ax.scatter(finalDf.loc[indiciesToKeep, 'principal component 1']
+                , finalDf.loc[indiciesToKeep, 'principal component 2']
+                , c = color
+                , s = 50)
+        ax.legend([ 'No Heart Disease', 'Heart Disease'])
+        ax.grid
+
         flike = io.BytesIO()
         plt.savefig(flike)
         b64 = base64.b64encode(flike.getvalue()).decode
         return b64
+    
     
     def age_heartdisease_chol(self, df):
         df_heart_disease = df[df['HeartDisease'] > 0]
@@ -141,43 +167,48 @@ class DataViewOne(LoginRequiredMixin, generic.ListView):
         return b64
     
     def pie_chest_heart(self, df):
-        df_heart_disease = df[df['HeartDisease'] > 0]
-
+        df.drop(df[df['HeartDisease'] == 0].index, inplace=True)
         plt.figure()
         df.groupby(['ChestPainType']).sum().plot(kind='pie', y='HeartDisease', autopct='%1.0f%%')
-
-        
+        plt.legend(['TA','ATA', 'NAP', 'ASY'])
+        plt.title('Chest Pain Type in Patients With Heart Disease')
         flike = io.BytesIO()
         plt.savefig(flike)
         b64 = base64.b64encode(flike.getvalue()).decode
         return b64
 
     def pie_chest_noheart(self, df):
+        df_specific = self.obtain_df()
+        df_specific.drop(df[df['HeartDisease'] == 1].index, inplace=True)
+        cond = df_specific['HeartDisease'] == 0
+        df_specific.loc[cond, 'HeartDisease'] = 1
+
         plt.figure()
-        df.groupby(['ChestPainType']).sum().plot(kind='pie', y='HeartDisease', autopct='%1.0f%%')
-        
+        df_specific.groupby(['ChestPainType']).sum().plot(kind='pie', y='HeartDisease', autopct='%1.0f%%')
+        plt.legend(['TA','ATA', 'NAP', 'ASY'])
+        plt.title('Chest Pain Type in Patients Without Heart Disease')
         flike = io.BytesIO()
         plt.savefig(flike)
         b64 = base64.b64encode(flike.getvalue()).decode
         return b64
 
+    def obtain_linear(self):
+        main = self.obtain_df()
+        reg_line = linReg.fit(main[['Age','Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope']],main['HeartDisease'])
+        return reg_line
+
 
     def get_context_data(self, **kwargs):
-
-
-
         df = self.obtain_df()
         context = {}
 
-        context['chart1'] = self.chol_heart(df)
-
-        context['chart2'] = self.age_heartdisease_chol(df)
-        context['chart3'] = self.BP_heart(df)
-        context['chart4'] = self.pie_chest_heart(df)
-        context['chart5'] = self.pie_chest_noheart(df)
-        context['chart6'] = self.pca(df)
-        #df_heart_disease = df[df['HeartDisease'] == 0]
-        #print(df_heart_disease.isnull().sum().sum())
+        context['chart1'] = self.chol_heart(self.obtain_df())
+        context['chart2'] = self.age_heartdisease_chol(self.obtain_df())
+        context['chart3'] = self.BP_heart(self.obtain_df())
+        context['chart4'] = self.pie_chest_heart(self.obtain_df())
+        context['chart5'] = self.pie_chest_noheart(self.obtain_df())
+        context['chart6'] = self.pca_f(self.obtain_df())
+        context['linear'] = self.obtain_linear().coef_
         return context
 
 linReg = linear_model.LinearRegression()

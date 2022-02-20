@@ -93,7 +93,17 @@ class Patient(models.Model):
 
     def perform_prediction(self):
         main = pd.read_csv('https://bscs-capstone-tyler.s3.us-east-2.amazonaws.com/cleanHeart.csv')
-        regu = linReg.fit(main[['Age','Sex', 'ChestPainType', 'RestingBP', 'Cholesterol', 'FastingBS', 'RestingECG', 'MaxHR', 'ExerciseAngina', 'Oldpeak', 'ST_Slope']],main['HeartDisease'])
+        regu = linReg.fit(main[['Age',
+                                'Sex',
+                                'ChestPainType',
+                                'RestingBP',
+                                'Cholesterol',
+                                'FastingBS',
+                                'RestingECG',
+                                'MaxHR',
+                                'ExerciseAngina',
+                                'Oldpeak',
+                                'ST_Slope']],main['HeartDisease'])
         tester = regu.predict([self.clean_attributes()])
         code = self.determine_severity(tester[0])
         return code
@@ -105,7 +115,6 @@ class Patient(models.Model):
             binSex = 0
         elif self.sex == 'F':
             binSex = 1
-        
         if self.chest == 'TA':
             binChest = 0
         elif self.chest == 'ATA':
@@ -114,11 +123,9 @@ class Patient(models.Model):
             binChest = 2
         elif self.chest == 'ASY':
             binChest = 3
-
         binRestingBP = int(self.restingBP)
         binCholesterol = int(self.cholesterol)
         binFastingBS = int(self.fastingBS)
-
         if self.ecg == 'Normal':
             binECG = 0
         elif self.ecg == 'ST':

@@ -1,28 +1,51 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;">
+<div style="background-color:grey;max-width: 685px;padding:20px;align-items: center;border-radius: 20px;">
+    <img src='data:image/png;base64,{{ chart6 }}' style="border-radius:20px">
+    <p style="margin-top:10px;font-weight:bold;">Because our data has multiple dimensions, a two dimensional PCA can be used to try and gain more information from the data in an attempt to better visualize the data.  Our target, being Heart Disease, was tested for using two dimensional PCA.</p>
+    <p>To generate our PCA, we first needed to establish the columns of our dataframe that our target, Heart Disease, was based from.  This would contain Age, Sex, Chest Pain, etc.  We then needed to normalize these values to increase the accuracy of our data.  After normalization, we can use the sklearn library to effectively generate our dataframe based on only two dimensions.  Combining that dataframe with our target dataframe and generate our final dataframe for display.  Fortunately, when displaying the PCA dataframe generated from the below code, we can start to see a clear seperation between the vitals of those with and those without heart disease.</p>
+    <img src="https://bscs-capstone-tyler.s3.us-east-2.amazonaws.com/code_pca.png" style="border-radius:10px" width="645px">
+</div>
+<div style="background-color:grey;max-width: 685px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
+    <p>0.00164228 <b>AGE</b></p>
+    <p>-0.16541432 <b>SEX</b></p>
+    <p>0.10859367 <b>CHESTPAINTYPE</b></p>
+    <p>0.00057038 <b>RESTING BP</b></p>
+    <p>-0.0004468 <b>CHOLESTEROL</b></p>
+    <p>0.13893142 <b>FASTING BS</b></p>
+    <p>0.0106357 <b>RESTING ECG</b></p>
+    <p>-0.00149352 <b>MAX HR</b></p>
+    <p>0.17520613 <b>EXERCISE ANGINA</b></p>
+    <p>0.04749547 <b>OLDPEAK</b></p>
+    <p>-0.2288278 <b>ST_SLOPE</b></p>
+
+    <p>These values represent the <b>linear regression</b> coefficients generated from our data.  These are the values our patient data will be tested against and given a risk assessment from.</p>
+</div>
+<div style="background-color:grey;max-width: 685px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
     <img src='data:image/png;base64,{{ chart1 }}' style="border-radius:20px">
     <p style="margin-top:10px;font-weight:bold;">This graph explains the differences between heart rate maxes in patients who do and don't have heart disease.  You can see a higher contentration of those with heart disease having a lower max heart rate.</p>
 </div>
-<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
+<div style="background-color:grey;max-width: 685px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
     <img src='data:image/png;base64,{{ chart2 }}' style="border-radius:20px">
     <p style="margin-top:10px;font-weight:bold;">This graph shows the differences in cholesterol levels in those of different ages with or without heart disease.  You can see a fairly normal distribution of cholesterol levels in those with and without heart disease, but you can start to see more heart disease patients as the age increases.</p>
 </div>
-<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
+<div style="background-color:grey;max-width: 685px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
     <img src='data:image/png;base64,{{ chart3 }}' style="border-radius:20px">
     <p style="margin-top:10px;font-weight:bold;">As blood pressure can be linked directly to the heart's successful functioning, this distribution does not show anything remarkable in regards to higher blood pressure correlation with heart disease or vice versa.  Overall, the data simply shows a higher concentration of those with heart disease among the elderly.</p>
 </div>
-<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
+<div style="background-color:grey;max-width: 685px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
     <img src='data:image/png;base64,{{ chart4 }}' style="border-radius:20px">
-    <p style="margin-top:10px;font-weight:bold;">This graph explains the differences between heart rate maxes in patients who do and don't have heart disease.  You can see a higher contentration of those with heart disease having a lower max heart rate.</p>
+    <p style="margin-top:10px;font-weight:bold;">This pie chart shows us the distribution of individuals with Typical Angina, Atypical Angina, Non Atypical Angina, and Asymptomatic chest pain individuals who have heart disease.  We can see that surprisingly, many of the individuals without any chest pain still have heart disease.  This may indicate that chest pain is not a great indicator of heart disease.</p>
 </div>
-<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
+<div style="background-color:grey;max-width: 685px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
     <img src='data:image/png;base64,{{ chart5 }}' style="border-radius:20px">
-    <p style="margin-top:10px;font-weight:bold;">This graph explains the differences between heart rate maxes in patients who do and don't have heart disease.  You can see a higher contentration of those with heart disease having a lower max heart rate.</p>
+    <p style="margin-top:10px;font-weight:bold;">This pie chart adds in a peculiar turn to our dataset and understanding our model.  You would think that in patients without heart disease, no chest pain would be the most common chest symptom.  Interestingly though, there's a fairly even distribution of our patients across all types of chest pain, with the fewest amount having Typical Angina.</p>
 </div>
-<div style="background-color:grey;max-width: 690px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;">
-    <img src='data:image/png;base64,{{ chart1 }}' style="border-radius:20px">
-    <p style="margin-top:10px;font-weight:bold;">This graph explains the differences between heart rate maxes in patients who do and don't have heart disease.  You can see a higher contentration of those with heart disease having a lower max heart rate.</p>
+<div style="background-color:grey;max-width: 685px;padding:20px;align-items: center;border-radius: 20px;margin-top: 10px;text-align: center;">
+    <h2>Consensus</h2>
+    <p><b>Predicting risk levels based on vital signs is possible and can be reliable.  A more complete dataset that involves tens of thousands of reliably random patients would aid to a more accurate model.</b></p>
+
 </div>
+
 {% endblock %}
